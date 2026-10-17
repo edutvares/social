@@ -1,7 +1,8 @@
 import Fastify from "fastify";
-import { criarUsuario } from "../core/usuarios.js";
 import { Conflito, Invalido, NaoEncontrado } from "../core/erros.js";
 import usuarioRoutes from "./routes/usuarios.routes.js";
+import { UsuarioService } from "../core/services/usuario.service.js";
+import { createDatabase } from "../infrastructure/database/connection.js";
 
 const app = Fastify({
   logger: true,
@@ -17,7 +18,12 @@ app.setErrorHandler((err, _req, reply) => {
   reply.code(500).send({ erro: "erro interno" });
 });
 
-app.register(usuarioRoutes, { prefix: "usuarios" });
+const db = createDatabase();
+console.log("Banco de dados criado");
+// TODO - O db vai ser passado para o repository no futuro
+const usuarioService = new UsuarioService(db);
+
+app.register(usuarioRoutes, { prefix: "usuarios", usuarioService });
 
 app.get("/ping", async (req, res) => {
   console.log("ping");

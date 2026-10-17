@@ -1,15 +1,19 @@
-import { FastifyInstance } from "fastify";
-import { criarUsuario } from "../../core/usuarios";
+import { FastifyInstance, FastifyPluginOptions } from "fastify";
+import { UsuarioService } from "../../core/services/usuario.service";
 
-async function usuarioRoutes(fastify: FastifyInstance, options: Object) {
+interface UsuarioRoutesOptions extends FastifyPluginOptions {
+  usuarioService: UsuarioService;
+}
+
+async function usuarioRoutes(
+  fastify: FastifyInstance,
+  options: UsuarioRoutesOptions
+) {
   fastify.post("/", async (req, reply) => {
     const { nome, email } = req.body as { nome: string; email: string };
-    return reply.code(201).send(criarUsuario(nome, email));
-  });
-
-  fastify.post("/", async (req, reply) => {
-    const { nome, email } = req.body as { nome: string; email: string };
-    return reply.code(201).send(criarUsuario(nome, email));
+    return reply
+      .code(201)
+      .send(options.usuarioService.criarUsuario(nome, email));
   });
 }
 

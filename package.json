@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "rest": "tsx rest/server.ts",
-    "graphql": "tsx rest/server.ts"
+    "rest": "tsx src/rest/server.ts",
+    "graphql": "tsx src/graphql/server.ts"
   },
   "keywords": [],
   "author": "",

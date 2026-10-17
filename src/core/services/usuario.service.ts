@@ -1,12 +1,20 @@
+import { DatabaseConnection } from "../../infrastructure/database/connection";
 import { Invalido } from "../erros";
 
 export class UsuarioService {
+  private db: DatabaseConnection;
+
+  constructor(db: DatabaseConnection) {
+    this.db = db;
+  }
+
   criarUsuario(nome: string, email: string) {
     console.log("Chamou aqui");
 
     if (!nome?.trim()) throw new Invalido("nome é obrigatórios");
     try {
-      return "PASSOU";
+      console.log(this.db);
+      return `Cadastro do usuário ${nome}`;
     } catch (error) {
       console.log(error);
     }
