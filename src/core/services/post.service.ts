@@ -16,26 +16,11 @@ export class PostService {
       throw new Invalido("Id do usuário e texto do post são obrigatórios");
     try {
       const post = { autor_id: usuario_id, texto } as Post;
-      return await this.repository.insert(post);
+      const id = await this.repository.insert(post);
+      return this.repository.findById(id);
     } catch (error) {
       console.log(error);
+      throw error;
     }
-    // try {
-    //   const tx = db.transaction(() => {
-    //     const r = db
-    //       .prepare("INSERT INTO usuario (nome, email) VALUES (?, ?)")
-    //       .run(nome, email);
-    //     db.prepare("INSERT INTO perfil (usuario_id) VALUES (?)").run(
-    //       r.lastInsertRowid
-    //     );
-    //     return Number(r.lastInsertRowid);
-    //   });
-    //   return "TESTE";
-    //   // return buscarUsuario(tx());
-    // } catch (e: any) {
-    //   if (e.code === "SQLITE_CONSTRAINT_UNIQUE")
-    //     throw new Conflito("email já cadastrado");
-    //   throw e;
-    // }
   }
 }

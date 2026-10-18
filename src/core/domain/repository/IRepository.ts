@@ -1,7 +1,7 @@
 export interface IRepository<T, TId> {
   insert(entity: T): Promise<TId>;
 
-  // findById(id: TId): Promise<T | null>;
+  findById(id: TId): T | null;
 
   // findAll(): Promise<T[]>;
 
