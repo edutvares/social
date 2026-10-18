@@ -31,11 +31,3 @@ export const typeDefs = /* GraphQL */ `
     feed(usuarioId: ID!): [Post!]!
   }
 `;
-// criarUsuario(nome: String!, email: String!): Usuario!
-// criarPost(usuarioId: ID!, texto: String!): Post!
-// comentar(usuarioId: ID!, postId: ID!, texto: String!): Comentario!
-// curtir(usuarioId: ID!, postId: ID!): Post!
-// seguir(usuarioId: ID!, alvoId: ID!): Boolean!
-
-// post(id: ID!): Post
-//     feed(usuarioId: ID!): [Post!]!

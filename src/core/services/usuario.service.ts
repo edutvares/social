@@ -15,6 +15,7 @@ export class UsuarioService {
     try {
       const usuario = { nome, email } as Usuario;
       const id = await this.usuarioRepository.insert(usuario);
+      // TODO - Criar perfil quando criar usuário
       return this.usuarioRepository.findById(id);
     } catch (error) {
       console.log(error);

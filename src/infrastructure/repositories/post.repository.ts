@@ -14,10 +14,6 @@ export class PostRepository
   }
 
   async postsDosSeguidos(idSeguidor: number): Promise<Post[]> {
-    console.log(
-      "🚀 ~ PostRepository ~ postsDosSeguidos ~ idSeguidor:",
-      idSeguidor
-    );
     const sql = `
     SELECT p.*
     FROM \`${this.tableName}\` p
@@ -25,9 +21,7 @@ export class PostRepository
     WHERE s.seguidor_id = ?
     ORDER BY p.criado_em DESC, p.id DESC
   `;
-    const rows = this.db.prepare(sql).all(idSeguidor) as Post[];
-    console.log("repo:", rows[0]);
-    return rows;
+    return this.db.prepare(sql).all(idSeguidor) as Post[];
   }
 
   postsDoUsuario(id: number): Post[] {

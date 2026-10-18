@@ -17,8 +17,8 @@ export class ComentarioRepository
     return this.db
       .prepare(
         `SELECT *
-                    FROM comentario
-                    WHERE post_id = ?`
+          FROM comentario
+          WHERE post_id = ?`
       )
       .all(idPost) as Comentario[];
   }
