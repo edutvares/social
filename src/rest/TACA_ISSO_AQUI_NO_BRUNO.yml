@@ -1,0 +1,132 @@
+opencollection: 1.0.0
+info:
+  name: social
+config:
+  proxy:
+    inherit: true
+    config:
+      protocol: http
+      hostname: ''
+      port: ''
+      auth:
+        username: ''
+        password: ''
+      bypassProxy: ''
+  environments:
+    - name: local
+      variables:
+        - name: serverUrl
+          value: http://localhost:3000
+items:
+  - info:
+      name: Cadastrar usuario
+      type: http
+      seq: 1
+    http:
+      method: POST
+      url: '{{serverUrl}}/usuarios'
+      body:
+        type: json
+        data: |-
+          {
+            "nome": "Maria",
+            "email": "maria@gmail.com"
+          }
+      auth: inherit
+    settings:
+      encodeUrl: true
+      timeout: 0
+      followRedirects: true
+      maxRedirects: 5
+      forwardAuthorizationHeader: false
+  - info:
+      name: Criar comentario
+      type: http
+      seq: 3
+    http:
+      method: POST
+      url: '{{serverUrl}}/comentarios'
+      body:
+        type: json
+        data: |-
+          {
+            "usuario_id": 1, "post_id": 1, "texto": "Esse post é muito sem graça"
+          }
+      auth: inherit
+    settings:
+      encodeUrl: true
+      timeout: 0
+      followRedirects: true
+      maxRedirects: 5
+      forwardAuthorizationHeader: false
+  - info:
+      name: criar post
+      type: http
+      seq: 2
+    http:
+      method: POST
+      url: '{{serverUrl}}/posts'
+      body:
+        type: json
+        data: |-
+          {
+            "usuario_id": 1,
+            "texto": "Esse é um post"
+          }
+      auth: inherit
+    settings:
+      encodeUrl: true
+      timeout: 0
+      followRedirects: true
+      maxRedirects: 5
+      forwardAuthorizationHeader: false
+  - info:
+      name: curtir
+      type: http
+      seq: 4
+    http:
+      method: POST
+      url: '{{serverUrl}}/curtidas'
+      body:
+        type: json
+        data: |-
+          {
+            "usuario_id": 1,
+            "post_id": 1
+          }
+      auth: inherit
+    settings:
+      encodeUrl: true
+      timeout: 0
+      followRedirects: true
+      maxRedirects: 5
+      forwardAuthorizationHeader: false
+  - info:
+      name: seguir
+      type: http
+      seq: 5
+    http:
+      method: POST
+      url: '{{serverUrl}}/seguidores'
+      body:
+        type: json
+        data: |-
+          {
+            "seguidor_id": 1,
+            "seguido_id": 2
+          }
+      auth: inherit
+    settings:
+      encodeUrl: true
+      timeout: 0
+      followRedirects: true
+      maxRedirects: 5
+      forwardAuthorizationHeader: false
+bundled: true
+extensions:
+  bruno:
+    ignore:
+      - node_modules
+      - .git
+    exportedAt: '2026-10-18T15:44:56.409Z'
+    exportedUsing: Bruno
