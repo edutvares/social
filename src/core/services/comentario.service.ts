@@ -25,4 +25,14 @@ export class ComentarioService {
       throw error;
     }
   }
+
+  obterPorPost(idPost: number) {
+    if (!idPost) throw new Invalido("Id do post é obrigatório");
+    try {
+      return this.repository.obterPorPost(idPost);
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
 }

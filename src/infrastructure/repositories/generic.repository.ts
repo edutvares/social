@@ -1,6 +1,7 @@
 import { IRepository } from "../../core/domain/repository/IRepository";
 import { Conflito, NaoEncontrado, Invalido } from "../../core/erros";
 import { DatabaseConnection } from "../database/connection";
+import { traduzirErroSqlite } from "../database/erros-sqlite";
 
 export abstract class GenericRepository<T extends object, TId = number>
   implements IRepository<T, TId>
@@ -33,21 +34,11 @@ export abstract class GenericRepository<T extends object, TId = number>
 
     const insert = this.db.prepare(sql);
 
-    // Execute with individual arguments or an array
     try {
       const result = insert.run(...values);
       return Number(result.lastInsertRowid) as TId;
     } catch (e: any) {
-      if (
-        e.code === "SQLITE_CONSTRAINT_UNIQUE" ||
-        e.code === "SQLITE_CONSTRAINT_PRIMARYKEY"
-      )
-        throw new Conflito("registro já existe");
-      if (e.code === "SQLITE_CONSTRAINT_FOREIGNKEY")
-        throw new NaoEncontrado("registro referenciado não existe");
-      if (e.code === "SQLITE_CONSTRAINT_CHECK")
-        throw new Invalido("dados violam uma regra de integridade");
-      throw e;
+      traduzirErroSqlite(e);
     }
   }
 

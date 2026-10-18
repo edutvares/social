@@ -23,4 +23,34 @@ export class PostService {
       throw error;
     }
   }
+
+  postsDoUsuario(id: number): Post[] {
+    if (!id) throw new Invalido("Id do usuário é ogrigatório.");
+    try {
+      return this.repository.postsDoUsuario(id);
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+
+  obterPorId(id: number): Post | null {
+    if (!id) throw new Invalido("Id do post é ogrigatório.");
+    try {
+      return this.repository.findById(id);
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+
+  postsDosSeguidos(idSeguidor: number) {
+    if (!idSeguidor) throw new Invalido("Id do seguidor é ogrigatório.");
+    try {
+      return this.repository.postsDosSeguidos(idSeguidor);
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
 }

@@ -21,4 +21,16 @@ export class UsuarioService {
       throw error;
     }
   }
+
+  buscarUsuario(id: number) {
+    if (!id) {
+      throw new Invalido("É obrigatório informar o id do usuário.");
+    }
+    try {
+      return this.usuarioRepository.findById(id);
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
 }

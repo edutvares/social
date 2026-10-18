@@ -4,6 +4,8 @@ import usuarioRoutes from "./routes/usuarios.routes.js";
 import postRoutes from "./routes/posts.routes.js";
 import comentarioRoutes from "./routes/comentario.routes.js";
 import { services } from "../container.js";
+import curtidaRoutes from "./routes/curtidas.routes.js";
+import seguidorRoutes from "./routes/seguidores.routes.js";
 
 const app = Fastify({
   logger: true,
@@ -32,6 +34,15 @@ app.register(postRoutes, { prefix: "posts", service: services.posts });
 app.register(comentarioRoutes, {
   prefix: "comentarios",
   service: services.comentarios,
+});
+
+// Curtidas
+app.register(curtidaRoutes, { prefix: "curtidas", service: services.curtidas });
+
+// Seguidor
+app.register(seguidorRoutes, {
+  prefix: "seguidores",
+  service: services.seguidor,
 });
 
 app.get("/ping", async (req, res) => {
