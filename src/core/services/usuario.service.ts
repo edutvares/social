@@ -1,20 +1,22 @@
-import { DatabaseConnection } from "../../infrastructure/database/connection";
+import { Usuario } from "../domain/entities/usuario";
+import { IUsuarioRepository } from "../domain/repository/IUsuarioRepository";
 import { Invalido } from "../erros";
 
 export class UsuarioService {
-  private db: DatabaseConnection;
+  private usuarioRepository: IUsuarioRepository;
 
-  constructor(db: DatabaseConnection) {
-    this.db = db;
+  constructor(usuarioRepository: IUsuarioRepository) {
+    this.usuarioRepository = usuarioRepository;
   }
 
-  criarUsuario(nome: string, email: string) {
+  async criarUsuario(nome: string, email: string) {
     console.log("Chamou aqui");
 
-    if (!nome?.trim()) throw new Invalido("nome é obrigatórios");
+    if (!nome?.trim() || !email?.trim())
+      throw new Invalido("nome e e-mail são obrigatórios");
     try {
-      console.log(this.db);
-      return `Cadastro do usuário ${nome}`;
+      const usuario = { nome, email } as Usuario;
+      return await this.usuarioRepository.insert(usuario);
     } catch (error) {
       console.log(error);
     }

@@ -13,7 +13,7 @@ async function usuarioRoutes(
     const { nome, email } = req.body as { nome: string; email: string };
     return reply
       .code(201)
-      .send(options.usuarioService.criarUsuario(nome, email));
+      .send(await options.usuarioService.criarUsuario(nome, email));
   });
 }
 
